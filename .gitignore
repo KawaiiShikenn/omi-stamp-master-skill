@@ -21,3 +21,6 @@ __pycache__/
 *.pyc
 *.pyo
 .venv/
+
+# 本地 skill 配置文件（私人使用，不公开）
+SKILL.md

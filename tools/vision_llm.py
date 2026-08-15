@@ -306,7 +306,7 @@ def vision_search(vision, entries, top_k=15):
     # 1) 志号（最强证据）：精确 +100；前缀（目录侧长度≥3） +50。
     #    票名一致性校验：千问误读志号时（T.128->T.126），命中的条目名与读出的票名
     #    不一致 => 证据降权（100->30 / 50->15），避免不相关票被一锤定音。
-    #    图序校验（2026-08-15 第五轮新增）：千问读出 (6-4) 但目标条目全套枚数 < 6
+    #    图序校验：千问读出 (6-4) 但目标条目全套枚数 < 6
     #    => 志号必为误读（如 J93 被读成 J83，J83 柯棣华只有 2 枚），命中作废。
     cn = _norm_catalog_no(vision.get("catalog_no"))
     vname = str(vision.get("name") or "").strip()
@@ -323,7 +323,7 @@ def vision_search(vision, entries, top_k=15):
                 add(e, 100 if _name_consistent(vname, e.get("name")) else 30)
             elif len(ec) >= 3 and (ec.startswith(cn) or cn.startswith(ec)):
                 add(e, 50 if _name_consistent(vname, e.get("name")) else 15)
-        # ---- 志号数字容错（2026-08-15 第五轮新增）----
+        # ---- 志号数字容错 ----
         # 千问读 J83、真实 J93：印刷体 8/9 是最典型误读。当志号匹配全部被
         # 图序校验作废时（说明读错了），对每一位数字做 0-9 替换生成变体，
         # 命中 +50 降权（志号本身读错，不能一锤定音，需年份/面值佐证）。
@@ -353,7 +353,7 @@ def vision_search(vision, entries, top_k=15):
             if str(e.get("issue_date", "")).startswith(year):
                 add(e, 3)
 
-    # 2.5) 面值（2026-08-15 第五轮新增）：千问读出 8分/0.08元，匹配 stamps 明细
+    # 2.5) 面值：千问读出 8分/0.08元，匹配 stamps 明细
     # 里的单枚面值。面值 + 年份组合能锁定套票（J93 1983年 8分 => 6-4 跳水）。
     den = str(vision.get("denomination") or "").strip()
     den_fen = None
@@ -373,7 +373,7 @@ def vision_search(vision, entries, top_k=15):
                     add(e, 5)
                     break
 
-    # 2.6) 图案描述关键词（2026-08-15 第七轮新增）：千问 design 里出现生肖动物名
+    # 2.6) 图案描述关键词：千问 design 里出现生肖动物名
     # （虎/马/牛…）+ 剪纸/年画风格词时，匹配目录 description/stamp_name。
     # 生肖票 OCR 无字 + CLIP 扎堆，这是第三证据线（虎+8分 => T107 丙寅年）。
     # 分级：目录含年号（"寅年"）是生肖票专有特征 +8；只含动物名（"虎"）容易

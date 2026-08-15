@@ -12,7 +12,7 @@ v2 改进 (2026-08-11):
 
 v2.1 改进 (2026-08-12):
   - 候选全部带参考图：每个 match 含 images（目录参考图绝对路径列表），
-    人工确认从"读文字猜"变成"看图秒选"（输出端用 MEDIA: 呈现）
+    人工确认从"读文字猜"变成"看图秒选"（输出端附参考图）
   - 千问精读裁判：OCR/CLIP 都没把握时（OCR 无字 / CLIP 扎堆），调通义千问 VL
     精读票面（志号/票名/年份/面值/票面文字），用读出的字段查本地目录，
     千问只"读"不"编"，杜绝幻觉；无 DASHSCOPE_API_KEY 时自动降级为原流程
@@ -72,7 +72,7 @@ def _extract_no_candidates(ocr_texts):
     """从 OCR 文本提取志号候选（含 OCR 容错：T/J 常被误读成 1，如 1.116 → T116/J116）。
 
     返回归一化候选列表，如 ["T116", "J116"]。
-    2026-08-15 第六轮修复：过滤年份误判——J/T 志号数字部分最多 3 位（J 系列到
+    年份误判过滤：J/T 志号数字部分最多 3 位（J 系列到
     ~J185、T 到 ~T167），4 位数字（1908）或以 19/20 开头的 3 位数字（190）
     是生卒年份（如票面"1908-1909"），不是志号。否则 190 会被当成 J90（马克思
     逝世一百周年）误伤正确答案。
@@ -82,7 +82,7 @@ def _extract_no_candidates(ocr_texts):
     for m in re.finditer(r"([1JT特纪]\.?\d{2,4})", joined):
         raw = m.group(1).replace(".", "")
         head, digits = raw[0], raw[1:]
-        # 年份过滤（2026-08-15 第六轮）：生卒年份 1908/1909/1990… 以 19/20 开头，
+        # 年份过滤：生卒年份 1908/1909/1990… 以 19/20 开头，
         # 而 J/T 志号数字部分最多 3 位（J 系列 ≤ ~J185、T ≤ ~T167）。
         # 必须检查完整 raw（如 "190" 是年份，不能只看 digits="90" 放过）。
         if len(digits) >= 4 or raw.startswith(("19", "20")):
@@ -99,7 +99,7 @@ def text_search(ocr_lines, entries, top_k=5):
     """OCR 文字 -> 目录名称子串检索。返回 [(命中数, entry), ...] 按命中数降序。
 
     志号硬匹配优先：OCR 读到志号（如 1.116.(4-1) → T116/J116）时直接加分置顶。
-    2026-08-15 第六轮修复：志号命中必须有关键词佐证才 +100（一锤定音）；
+    志号命中必须有关键词佐证才 +100（一锤定音）；
     纯志号命中（如 OCR 把 J.136.(3-1) 误读成 155 → J55，撞上真实存在的 J055
     鉴真大师像）无文字佐证，只 +10——否则误读志号会把正确答案压下去。
     """
@@ -183,7 +183,7 @@ def _detail_str(vals, suffix=""):
 
 
 def _build_match(src, score, full, im, data_root):
-    """构造一个候选 match，带全部参考图路径（供输出端 MEDIA: 呈现）。"""
+    """构造一个候选 match，带全部参考图路径（供输出端附参考图）。"""
     imgs = [os.path.join(data_root, p) for p in full.get("images", [])] if full.get("images") else []
     exact = ""
     if src == "clip" and im and im.get("image"):
@@ -359,7 +359,7 @@ def recognize(image_path, catalog_dir, top_k=5, use_vision=True):
                                 clip_text_matches.append((s, m, full))
 
             # ---- 合并候选：按证据强度排序，不是固定源优先级 ----
-            # 教训（2026-08-15 第五轮）：
+            # 排序原则：
             #   1. vision 的弱匹配（年份 +3，如 1983 年的天鹅票）不能压过 vision 的
             #      强组合（年份+面值，如 J93 = 3+5）；按分数排即可
             #   2. clip_text（中文描述检索）对 CLIP 不可靠（英文训练，中文嵌入 0.29
@@ -420,7 +420,7 @@ def recognize(image_path, catalog_dir, top_k=5, use_vision=True):
     # 拆图失败（所有区域都无匹配）时，对原图整图 OCR 一次，
     # 用读到的票面文字走文字检索（贺龙票案例：拆图只切出细长条，
     # 但整图文字"贺龙同志诞生九十周年"可读，检索直接命中 J126）。
-    # 2026-08-15 第六轮修正：只要已有区域给出匹配（哪怕 partial），就不触发——
+    # 只要已有区域给出匹配（哪怕 partial），就不触发——
     # 密集册页整图 OCR 会混读整页 10 枚票的文字，检索必然串味（J049 斯大林误报），
     # 反而污染结果。仅当全部区域都无匹配时才整图兜底。
     if cat and results and not any(r.get("matches") for r in results):
@@ -515,7 +515,7 @@ def _completeness(bbox, img_shape, ocr_texts, top_entry_id, seen_entry_ids, seen
         reasons.append(f"区域含多个志号({','.join(uniq_nos)[:24]})")
     # 残片嫌疑：形状正常但 OCR 只有邮政字样/面值（无票面关键词且无完整志号）
     # 如上一轮"中国人民邮政"残片被判 full 的错误输出
-    # 2026-08-15 第五轮：千问读出有效信息（图案/年份/面值）说明区域含完整票面，
+    # 千问读出有效信息（图案/年份/面值）说明区域含完整票面，
     # 不是残片（跳水票 OCR 只有"中国人民民政"但千问读出红色泳衣跳水运动员）
     if not reasons and not uniq_nos and not _has_meaningful_text(ocr_texts) and not has_vision_evidence:
         reasons.append("OCR 无票面信息（残片嫌疑）")
