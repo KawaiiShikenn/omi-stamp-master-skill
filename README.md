@@ -1,8 +1,10 @@
-# Omi 的邮票识别大师 / Omi's Stamp Master
+# 📮 Omi 的邮票识别大师 / Omi's Stamp Master
 
-基于 **OCR + CLIP 图像检索 + 视觉大模型精读** 的中国邮票本地识别工具（1949-2025 全覆盖），
-识别输出志号、名称、发行日期、面值明细、齿孔、尺寸、版别、印刷厂、发行量等完整收藏信息，
-并附带目录参考图供人工核对。
+一个 **OpenClaw Skill**——基于 **OCR + CLIP 图像检索 + 视觉大模型精读** 的中国邮票本地识别工具（1949-2025 全覆盖）。
+识别输出志号、名称、发行日期、面值明细、齿孔、尺寸、版别、印刷厂、发行量等完整收藏信息，并附带目录参考图供人工核对。
+
+> 本仓库既是可安装的 OpenClaw Skill（[SKILL.md](SKILL.md)），也可作为独立的 Python 工具使用。
+> 数据源为本地《中国邮票电子目录》（2,003 套票），**离线优先、零云成本路径默认开启**。
 
 ## 功能特性
 
@@ -30,6 +32,18 @@
 | 目录库 | 本地《中国邮票电子目录》解析 | 2,003 套票元数据 + 8,946 张唯一图片索引 |
 
 ## 快速开始
+
+### 作为 OpenClaw Skill 安装
+
+将本仓库 clone 到 OpenClaw 的 skills 目录即可被识别加载：
+
+```bash
+# OpenClaw 技能目录（路径随安装方式而异）
+cp -r omi-stamp-master /path/to/openclaw/skills/omi-stamp-master
+```
+
+然后在对话中发送邮票照片，或说“识别这张邮票”即可触发。
+Skill 的触发方式、输出格式与使用约定见 **[SKILL.md](SKILL.md)**。
 
 ### 依赖安装
 
@@ -116,6 +130,7 @@ DASHSCOPE_API_KEY=your-key-here
 
 ```
 omi-stamp-master/
+  SKILL.md            # OpenClaw Skill 定义（触发/流程/输出格式）
   docs/
     BUILDING.md         # 目录库构建完整指南（数据获取/解压/构建/排错）
   tools/
