@@ -237,6 +237,14 @@ omi-stamp-master/
   （每次调用结果有本地缓存，同图不重复上传）。
 - API Key 通过环境变量或 `.env` 配置，不提交仓库，请妥善保管。
 
+## 参与贡献
+
+欢迎任何形式的贡献：报告 Bug、提功能建议、提交代码。
+
+- 贡献指南见 **[CONTRIBUTING.md](CONTRIBUTING.md)**
+- Bug / 功能建议请用 [Issues](https://github.com/kawaiishikenn/omi-stamp-master-skill/issues) 模板提交
+- 提交代码请先 Fork 并遵循 CONTRIBUTING 中的流程
+
 ## License
 
 MIT（详见 [LICENSE](LICENSE)）
