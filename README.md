@@ -72,6 +72,13 @@ python tools/recognize.py <图片路径> --catalog catalog [--json] [--no-vision
 DASHSCOPE_API_KEY=your-key-here
 ```
 
+## 平台支持
+
+- **Windows / Linux / macOS** 均可运行（Python 3.9+）
+- 中文路径图片读取：优先 `cv2.imread`，Windows 中文路径自动退回 `np.fromfile` 方案
+- 控制台输出统一 UTF-8（避免 Windows GBK 控制台 emoji 报错）
+- 目录库构建脚本兼容 CHM 源的 GBK 编码 HTML
+
 ## 数据获取说明
 
 本项目的目录库来自集邮爱好者社区整理的公开电子目录《中国邮票电子目录》

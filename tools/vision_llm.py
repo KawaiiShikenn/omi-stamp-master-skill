@@ -94,7 +94,10 @@ def _img_hash(image, size=_CACHE_SIZE):
         if hasattr(image, "ndim"):
             arr = image
         else:
-            arr = cv2.imdecode(np.fromfile(image, dtype=np.uint8), cv2.IMREAD_COLOR)
+            # 跨平台读图：先 cv2.imread（Linux/macOS 支持 UTF-8 路径），再退回 fromfile
+            arr = cv2.imread(str(image))
+            if arr is None:
+                arr = cv2.imdecode(np.fromfile(image, dtype=np.uint8), cv2.IMREAD_COLOR)
             if arr is None:
                 return ""
         small = cv2.resize(arr, (size, size), interpolation=cv2.INTER_AREA)

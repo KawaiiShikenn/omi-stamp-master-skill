@@ -56,9 +56,18 @@ def detect_stamp(image, debug=False):
     return warped, rect
 
 
+def imread_unicode(path):
+    """跨平台读图：优先 cv2.imread（Linux/macOS 原生支持 UTF-8 路径），
+    Windows 中文路径失败时退回 np.fromfile + imdecode。"""
+    img = cv2.imread(str(path))
+    if img is None:
+        img = cv2.imdecode(np.fromfile(path, dtype=np.uint8), cv2.IMREAD_COLOR)
+    return img
+
+
 def load_image(path):
-    """读取图片（支持中文路径）"""
-    return cv2.imdecode(np.fromfile(path, dtype=np.uint8), cv2.IMREAD_COLOR)
+    """读取图片（支持中文路径，跨平台）"""
+    return imread_unicode(path)
 
 
 def _iou_regions(a, b):
