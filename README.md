@@ -44,13 +44,13 @@ pip install torch --index-url https://download.pytorch.org/whl/cpu
 识别依赖本地目录库（`catalog/catalog.json` 元数据 + `catalog/index.npy` 图片索引）。
 目录库由《中国邮票电子目录》CHM 数据源解析而来，**不随本仓库分发**，需自行获取后构建。
 
-```bash
-# 1. 解析 CHM 解压数据 -> catalog.json（2,003 套票元数据）
-python tools/build_catalog.py <CHM解压根目录> <输出路径>
+**一键构建**（自动探测 + 解析 + 建索引）：
 
-# 2. 对目录图片做 CLIP 嵌入 -> index.npy（8,946 张唯一图索引）
-python tools/build_index.py
+```bash
+python tools/setup.py <CHM解压根目录>
 ```
+
+完整流程、数据获取方式、分步构建与排错见 **[docs/BUILDING.md](docs/BUILDING.md)**。
 
 ### 识别一张邮票
 
@@ -116,7 +116,10 @@ DASHSCOPE_API_KEY=your-key-here
 
 ```
 stamp-recognizer/
+  docs/
+    BUILDING.md         # 目录库构建完整指南（数据获取/解压/构建/排错）
   tools/
+    setup.py            # 一键构建目录库（解析 + 建索引）
     recognize.py        # 主入口：图片 -> 识别结果
     preprocess.py       # 邮票区域检测/裁剪/矫正/多枚拆图
     ocr_engine.py       # RapidOCR 封装（大图自动缩放防溢出）
