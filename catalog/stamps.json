@@ -1,0 +1,98 @@
+[
+  {
+    "id": "t46",
+    "name": "庚申年（猴票）",
+    "name_en": "Gengshen Year (Monkey)",
+    "country": "中国",
+    "year": 1980,
+    "theme": "生肖",
+    "denomination": "8分",
+    "catalog_no": "T.46",
+    "keywords": ["猴", "生肖", "黄永玉", "庚申", "1980"],
+    "image": ""
+  },
+  {
+    "id": "j94",
+    "name": "梅兰芳舞台艺术",
+    "name_en": "Mei Lanfang Stage Art",
+    "country": "中国",
+    "year": 1962,
+    "theme": "京剧/人物",
+    "denomination": "8分等",
+    "catalog_no": "纪94",
+    "keywords": ["梅兰芳", "京剧", "舞台", "人物"],
+    "image": ""
+  },
+  {
+    "id": "t44",
+    "name": "齐白石作品选",
+    "name_en": "Selected Works of Qi Baishi",
+    "country": "中国",
+    "year": 1980,
+    "theme": "绘画",
+    "denomination": "8分等",
+    "catalog_no": "T.44",
+    "keywords": ["齐白石", "国画", "虾", "绘画"],
+    "image": ""
+  },
+  {
+    "id": "t57",
+    "name": "黄山风景",
+    "name_en": "Huangshan Scenery",
+    "country": "中国",
+    "year": 1963,
+    "theme": "风景",
+    "denomination": "4分-50分",
+    "catalog_no": "特57",
+    "keywords": ["黄山", "风景", "迎客松"],
+    "image": ""
+  },
+  {
+    "id": "t38",
+    "name": "金鱼",
+    "name_en": "Goldfish",
+    "country": "中国",
+    "year": 1960,
+    "theme": "动物",
+    "denomination": "4分-8分",
+    "catalog_no": "特38",
+    "keywords": ["金鱼", "动物", "水族"],
+    "image": ""
+  },
+  {
+    "id": "p1",
+    "name": "天安门图案普通邮票（普1）",
+    "name_en": "Tiananmen Regular Issue",
+    "country": "中国",
+    "year": 1950,
+    "theme": "建筑/普通邮票",
+    "denomination": "100元-10000元（旧币）",
+    "catalog_no": "普1",
+    "keywords": ["天安门", "普通邮票", "建筑"],
+    "image": ""
+  },
+  {
+    "id": "w1",
+    "name": "战无不胜的毛泽东思想万岁",
+    "name_en": "Long Live Mao Zedong Thought",
+    "country": "中国",
+    "year": 1967,
+    "theme": "文革",
+    "denomination": "8分",
+    "catalog_no": "文1",
+    "keywords": ["文革", "毛泽东", "语录"],
+    "image": ""
+  },
+  {
+    "id": "j8",
+    "name": "胜利完成第四个五年计划",
+    "name_en": "The Fourth Five-Year Plan",
+    "country": "中国",
+    "year": 1976,
+    "theme": "工业/建设",
+    "denomination": "8分等",
+    "catalog_no": "J.8",
+    "keywords": ["五年计划", "工业", "建设"],
+    "image": ""
+  }
+]

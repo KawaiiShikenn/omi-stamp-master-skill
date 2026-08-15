@@ -1,0 +1,9 @@
+# 邮票识别 Skill 依赖（Python 3.14 / Windows）
+# torch 2.13.0+cpu 已预装（CLIP 推理用）
+opencv-python>=4.10
+rapidocr_onnxruntime>=1.3
+onnxruntime>=1.17
+transformers>=4.46
+pillow>=10.0
+numpy>=1.26
+beautifulsoup4>=4.12

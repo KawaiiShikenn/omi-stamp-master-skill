@@ -1,0 +1,23 @@
+# ===== 密钥（绝不上传） =====
+.env
+
+# ===== 目录库数据（版权数据 + 大文件，不随仓库分发） =====
+# catalog.json 由《中国邮票电子目录》CHM 解析而来，版权归原目录作者，
+# 不在本仓库公开。需要者自行获取 CHM 源并用 tools/build_catalog.py 构建。
+catalog/catalog.json
+catalog/catalog.json.bak-v1
+catalog/index.npy
+catalog/index.json
+catalog/.emb_cache/
+catalog/images/
+.vision_cache/
+
+# ===== 临时/测试残留 =====
+tmp/
+tmp_result.json
+
+# ===== Python =====
+__pycache__/
+*.pyc
+*.pyo
+.venv/
