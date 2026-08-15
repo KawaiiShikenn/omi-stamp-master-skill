@@ -1,4 +1,4 @@
-# 邮票识别 / Chinese Stamp Recognizer
+# Omi 的邮票识别大师 / Omi's Stamp Master
 
 基于 **OCR + CLIP 图像检索 + 视觉大模型精读** 的中国邮票本地识别工具（1949-2025 全覆盖），
 识别输出志号、名称、发行日期、面值明细、齿孔、尺寸、版别、印刷厂、发行量等完整收藏信息，
@@ -115,7 +115,7 @@ DASHSCOPE_API_KEY=your-key-here
 ## 项目结构
 
 ```
-stamp-recognizer/
+omi-stamp-master/
   docs/
     BUILDING.md         # 目录库构建完整指南（数据获取/解压/构建/排错）
   tools/

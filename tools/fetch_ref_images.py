@@ -22,7 +22,7 @@ QUERIES = {
 
 def api(params):
     url = API + "?" + urllib.parse.urlencode(params)
-    req = urllib.request.Request(url, headers={"User-Agent": "stamp-recognizer/1.0 (open-source)"})
+    req = urllib.request.Request(url, headers={"User-Agent": "omi-stamp-master/1.0 (open-source)"})
     with urllib.request.urlopen(req, timeout=30) as r:
         return json.load(r)
 
@@ -62,7 +62,7 @@ def main():
             ext = ".jpg" if "jpeg" in url or ".jpg" in url else ".png"
             dest = os.path.join(IMAGES_DIR, sid + ext)
             try:
-                req = urllib.request.Request(url, headers={"User-Agent": "stamp-recognizer/1.0 (open-source)"})
+                req = urllib.request.Request(url, headers={"User-Agent": "omi-stamp-master/1.0 (open-source)"})
                 with urllib.request.urlopen(req, timeout=60) as r, open(dest, "wb") as f:
                     f.write(r.read())
                 saved = os.path.basename(dest)
